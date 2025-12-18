@@ -4,13 +4,8 @@
 import pygetwindow as gw
 import time
 
-activitiesToTrack = {
-    'Asana': 0, 
-    'BlueVector AI, LLC Mail': 0, 
-    'Log Timesheet': 0, 
-    'Building No-Code Apps with SnapApp: Foundations': 0, 
-    'BVI Implementation Services': 0
-}
+activitiesToTrack = ['Asana', 'BlueVector AI, LLC Mail', 'Log Timesheet', 'Building No-Code Apps with SnapApp: Foundations', 'Render Labs', 'BVI Implementation Services']
+activitiesTime = {}
 
 def main():
     activityStartTime = time.time()
@@ -25,10 +20,10 @@ def main():
                 print(activityData) is find the windows or tabs you use for 
                 your work and add them to activitiesToTrack...
                 """
-                # print(activityData)
+                print(activityData)
                 # print(gw.getActiveWindowTitle())
 
-                if len(activityData) > 2:
+                if len(activityData) > 1:
                     currentActivity = activityData[-2]  
 
                 """
@@ -36,27 +31,28 @@ def main():
                 current window or tab that you want to check is contained 
                 in the variablr or not
                 """
-                # print(currentActivity)
+                print(currentActivity)
 
                 now = time.time()
 
                 if (currentActivity in activitiesToTrack):
                     elapsed = round(now - activityStartTime)
-                    activitiesToTrack[currentActivity] += elapsed
+                    # activitiesTime[currentActivity] += elapsed
+                    activitiesTime[currentActivity] = activitiesTime.get(currentActivity, 0) + elapsed
                 
                 activityStartTime = now
             time.sleep(0.5)
     except KeyboardInterrupt:
-        if currentActivity in activitiesToTrack:
-            activitiesToTrack[currentActivity] += round(time.time() - activityStartTime)
+        if currentActivity in activitiesTime:
+            activitiesTime[currentActivity] += round(time.time() - activityStartTime)
 
         # Feel free to change how you want to view the time you spent 
 
         print("\nActivity Overview")
-        for k, v in activitiesToTrack.items():
+        for k, v in activitiesTime.items():
             print(f"{k}: {time.strftime('%H:%M:%S', time.gmtime(v))}")
 
-        total_seconds = sum(activitiesToTrack.values())
+        total_seconds = sum(activitiesTime.values())
         totalTime = time.strftime("%H:%M:%S", time.gmtime(total_seconds))
 
         print(f"\nTotal Time: {totalTime}")
