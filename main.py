@@ -21,7 +21,7 @@ def main():
                 print(activityData) is find the windows or tabs you use for 
                 your work and add them to activitiesToTrack...
                 """
-                print(activityData)
+                # print(activityData)
                 # print(gw.getActiveWindowTitle())
 
                 now = time.time()
