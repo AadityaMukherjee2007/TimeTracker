@@ -4,7 +4,6 @@
 import pygetwindow as gw
 import time
 
-activitiesToTrack = ['Asana', 'BlueVector AI, LLC Mail', 'Log Timesheet', 'Building No-Code Apps with SnapApp: Foundations', 'Render Labs', 'BVI Implementation Services']
 activitiesTime = {}
 
 def main():
@@ -14,7 +13,9 @@ def main():
     try:
         while True:
             if (currentActivity != gw.getActiveWindowTitle() and gw.getActiveWindowTitle() not in ('', 'Task Switching', 'None')):
-                activityData  = str(gw.getActiveWindowTitle()).split(" - ")
+                
+                activityData  = str(gw.getActiveWindowTitle()).rsplit(" - ", 1)
+                currentActivity = activityData[0]
 
                 """
                 print(activityData) is find the windows or tabs you use for 
@@ -23,19 +24,16 @@ def main():
                 print(activityData)
                 # print(gw.getActiveWindowTitle())
 
-                if len(activityData) > 1:
-                    currentActivity = activityData[-2]  
-
-                """
-                print out the current activity to get an idea if the 
-                current window or tab that you want to check is contained 
-                in the variablr or not
-                """
-                print(currentActivity)
-
                 now = time.time()
 
-                if (currentActivity in activitiesToTrack):
+                if ("Brave" in activityData):
+
+                    """
+                    print out the current activity to get an idea if the 
+                    current window or tab that you want to check is contained 
+                    in the variablr or not
+                    """
+                    print(currentActivity)
                     elapsed = round(now - activityStartTime)
                     # activitiesTime[currentActivity] += elapsed
                     activitiesTime[currentActivity] = activitiesTime.get(currentActivity, 0) + elapsed
