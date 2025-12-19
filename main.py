@@ -2,9 +2,27 @@
 # Hope this simple piece of code can ease your life a bit
 
 import pygetwindow as gw
-import time
+import time, os
 
 activitiesTime = {}
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def displayTrackedActivities():
+    # Feel free to change how you want to view the time you spent 
+    clear_screen()
+
+    print("\r\n==============Activity Overview==============")
+    for k, v in activitiesTime.items():
+        print(f"--> {k}: {time.strftime('%H:%M:%S', time.gmtime(v))}")
+
+    total_seconds = sum(activitiesTime.values())
+    totalTime = time.strftime("%H:%M:%S", time.gmtime(total_seconds))
+
+    print("=============================================")
+    print(f"\nTotal Time: {totalTime}")
+
 
 def main():
     activityStartTime = time.time()
@@ -31,7 +49,7 @@ def main():
                     """
                     print out the current activity to get an idea if the 
                     current window or tab that you want to check is contained 
-                    in the variablr or not
+                    in the variable or not
                     """
                     print(currentActivity)
                     elapsed = round(now - activityStartTime)
@@ -39,23 +57,15 @@ def main():
                     activitiesTime[currentActivity] = activitiesTime.get(currentActivity, 0) + elapsed
                 
                 activityStartTime = now
+                displayTrackedActivities()
+
             time.sleep(0.5)
     except KeyboardInterrupt:
         if currentActivity in activitiesTime:
             activitiesTime[currentActivity] += round(time.time() - activityStartTime)
-
-        # Feel free to change how you want to view the time you spent 
-
-        print("\n==============Activity Overview==============")
-        for k, v in activitiesTime.items():
-            print(f"--> {k}: {time.strftime('%H:%M:%S', time.gmtime(v))}")
-
-        total_seconds = sum(activitiesTime.values())
-        totalTime = time.strftime("%H:%M:%S", time.gmtime(total_seconds))
-
-        print("=============================================")
-
-        print(f"\nTotal Time: {totalTime}")
+        
+        displayTrackedActivities()
+        
 
 if __name__ == "__main__":
     main()
