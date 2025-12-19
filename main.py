@@ -46,12 +46,14 @@ def main():
 
         # Feel free to change how you want to view the time you spent 
 
-        print("\nActivity Overview")
+        print("\n==============Activity Overview==============")
         for k, v in activitiesTime.items():
-            print(f"{k}: {time.strftime('%H:%M:%S', time.gmtime(v))}")
+            print(f"--> {k}: {time.strftime('%H:%M:%S', time.gmtime(v))}")
 
         total_seconds = sum(activitiesTime.values())
         totalTime = time.strftime("%H:%M:%S", time.gmtime(total_seconds))
+
+        print("=============================================")
 
         print(f"\nTotal Time: {totalTime}")
 
